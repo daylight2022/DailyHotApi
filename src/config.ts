@@ -22,4 +22,6 @@ const getNumericEnvValue = (key: string, defaultValue: number): number => {
 
 export const config = {
 	port: getNumericEnvValue('PORT', 9001),
+	timeout: getNumericEnvValue("TIMEOUT", 5000),
+	cache_ttl: getNumericEnvValue("CACHE_TTL", 3600)
 };

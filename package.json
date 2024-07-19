@@ -5,8 +5,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",
+    "axios": "^1.7.2",
+    "dayjs": "^1.11.12",
     "dotenv": "^16.4.5",
-    "hono": "^4.5.0"
+    "hono": "^4.5.0",
+    "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",

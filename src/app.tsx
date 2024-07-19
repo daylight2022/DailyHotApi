@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import Home from './views/Home.js';
 import { serveStatic } from "@hono/node-server/serve-static";
 import { cors } from 'hono/cors';
+import registry from '@/registry';
 
 const app = new Hono();
 
@@ -15,6 +16,8 @@ app.use(
 	})
 );
 
+// 接口路由测试
+app.route("/", registry)
 
 // 首页
 app.get('/', (c) => c.html(<Home />));

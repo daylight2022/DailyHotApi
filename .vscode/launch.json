@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Hono: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev"
+    },
+    {
+      "name": "Hono: debug client-side",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:9001"
+    },
+    {
+      "name": "Hono: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev",
+      "console": "integratedTerminal",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
