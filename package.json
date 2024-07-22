@@ -1,18 +1,37 @@
 {
-  "name": "DailyHotApi",
+  "name": "dailyhot-api",
+  "version": "0.1.0",
+  "description": "An API on Hono to get daily hot news",
+  "keywords": [
+    "API"
+  ],
+  "homepage": "https://github.com/daylight2022/DailyHotApi",
+  "bugs": {
+    "url": "https://github.com/daylight2022/DailyHotApi/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daylight2022/DailyHotApi.git"
+  },
+  "license": "MIT",
+  "author": "Kody",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "cross-env NODE_ENV=development tsx watch --no-cache src/index.ts",
+    "dev:cache": "cross-env NODE_ENV=development tsx watch src/index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",
     "axios": "^1.7.2",
+    "chalk": "^5.3.0",
     "dayjs": "^1.11.12",
     "dotenv": "^16.4.5",
     "hono": "^4.5.0",
-    "node-cache": "^5.1.2"
+    "node-cache": "^5.1.2",
+    "winston": "^3.13.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "cross-env": "^7.0.3",
     "tsx": "^4.7.1"
   }
 }

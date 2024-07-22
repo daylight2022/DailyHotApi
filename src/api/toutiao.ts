@@ -1,15 +1,15 @@
 import { get } from '@/utils/getData';
+import { getTime } from '@/utils/getTime';
 import { RouteType } from '@/types/router';
 import { RouteData } from '@/types';
 
 export const getRouteData = async (noCache: boolean) => {
 	const { fromCache, updateTime, data } = await getList(noCache);
 	const routeData: RouteData = {
-		name: 'zhihu-daily',
-		title: '知乎日报',
-		type: '推荐榜',
-		description: '每天三次，每次七分钟',
-		link: 'https://daily.zhihu.com',
+		name: 'toutiao',
+		title: '今日头条',
+		type: '热榜',
+		link: 'https://www.toutiao.com',
 		total: data?.length || 0,
 		updateTime,
 		fromCache,
@@ -19,27 +19,22 @@ export const getRouteData = async (noCache: boolean) => {
 };
 
 export const getList = async (noCache: boolean) => {
-	const url = 'https://daily.zhihu.com/api/4/news/latest';
+	const url = `https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc`;
 	const res = await get({
 		url,
 		noCache,
-		headers: {
-			Referer: url,
-			Host: 'daily.zhihu.com',
-		},
 	});
-	const list = res.data.stories.filter((item: RouteType['zhihu-daily']) => item.type === 0);
+	const list = res.data || [];
 	return {
 		fromCache: res.fromCache,
 		updateTime: res.updateTime,
-		data: list.map((t: RouteType['zhihu-daily']) => ({
-			id: t.id,
-			title: t.title,
-			cover: t.images[0],
-			author: t.hint,
-			hot: null,
-			timestamp: null,
-			url: t.url,
+		data: list.map((t: RouteType['toutiao']) => ({
+			id: t.ClusterIdStr,
+			title: t.Title,
+			cover: t.Image.url,
+			hot: Number(t.HotValue),
+			timestamp: getTime(t.ClusterIdStr),
+			url: `https://www.toutiao.com/trending/${t.ClusterIdStr}/`,
 		})),
 	};
 };

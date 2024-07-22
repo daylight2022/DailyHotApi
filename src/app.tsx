@@ -4,10 +4,11 @@ import { serveStatic } from '@hono/node-server/serve-static';
 import { trimTrailingSlash } from 'hono/trailing-slash';
 import { compress } from 'hono/compress';
 import { cors } from 'hono/cors';
-import registry from '@/registry';
+import registry from './registry';
 import { config } from './config.js';
 import NotFound from './views/404.js';
 import Error from './views/Error.js';
+import logger from './utils/logger.js';
 
 const app = new Hono();
 
@@ -46,6 +47,7 @@ app.get('/', (c) => c.html(<Home />));
 app.notFound((c) => c.html(<NotFound />, 404));
 // error
 app.onError((err, c) => {
+	logger.error(`出现未知错误：${err}`);
 	return c.html(<Error error={err?.message} />, 500);
 });
 

@@ -11,7 +11,6 @@ export type RouteType = {
 		target: {
 			id: string;
 			title: string;
-			url: string;
 			created: number;
 			excerpt: string;
 		};
@@ -22,4 +21,12 @@ export type RouteType = {
 		];
 		detail_text: string;
 	};
+	toutiao: {
+		ClusterIdStr: string;
+		Title: string
+		HotValue: string;
+		Image: {
+			url: string
+		}
+	}
 };

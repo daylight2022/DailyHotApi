@@ -19,10 +19,17 @@ const getNumericEnvValue = (key: string, defaultValue: number): number => {
 	}
 	return parsedValue;
 };
+// 环境变量转布尔值
+const getBooleanEnvValue = (key: string, defaultValue: boolean): boolean => {
+	const value = getEnvValue(key) ?? String(defaultValue);
+	return value.toLowerCase() === 'true';
+};
 
 export const config = {
 	PORT: getNumericEnvValue('PORT', 9001),
 	TIMEOUT: getNumericEnvValue("TIMEOUT", 5000),
 	CACHE_TTL: getNumericEnvValue("CACHE_TTL", 3600),
-	ALLOWED_DOMAIN: getEnvValue("ALLOWED_DOMAIN") || "*"
+	ALLOWED_DOMAIN: getEnvValue("ALLOWED_DOMAIN") || "*",
+	USE_LOG_FILE: getBooleanEnvValue("USE_LOG_FILE", true),
+	LOG_PATH: getEnvValue("LOG_PATH") || "./logs",
 };
