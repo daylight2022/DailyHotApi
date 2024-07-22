@@ -5,7 +5,7 @@ import { getCache, setCache, delCache } from './cache';
 
 // 创建axios实例
 const request = axios.create({
-	timeout: config.timeout,
+	timeout: config.TIMEOUT,
 });
 
 // 请求拦截器
@@ -31,7 +31,7 @@ request.interceptors.response.use(
 
 // GET
 export const get = async (options: GET) => {
-	const { url, headers, params, noCache, ttl = config.cache_ttl } = options;
+	const { url, headers, params, noCache, ttl = config.CACHE_TTL } = options;
 	try {
 		if (noCache) delCache(url);
 		else {

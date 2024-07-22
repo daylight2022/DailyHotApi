@@ -3,8 +3,8 @@ import { Hono } from 'hono';
 const app = new Hono();
 
 app.get('/zhihu', async (c) => {
-	const { getList } = await import('@/api/zhihu-daily');
-	const listData = await getList(true);
+	const { getRouteData } = await import('@/api/zhihu-daily');
+	const listData = await getRouteData(true);
 	return c.json({
 		code: 200,
 		...listData,
