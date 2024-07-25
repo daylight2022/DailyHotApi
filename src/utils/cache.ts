@@ -26,12 +26,12 @@ export const getCache = <T>(key: string): GetCache<T> | undefined => {
 // 数据写入缓存
 export const setCache = <T>(key: string, data: T, ttl: number = config.CACHE_TTL): boolean => {
 	const result = cache.set(key, data, ttl);
-	logger.info(`缓存写入成功：${key}`);
+	logger.info('缓存写入成功', { url: key });
 	return result;
 };
 
 // 删除缓存
 export const delCache = (key: string) => {
 	cache.del(key);
-	logger.info(`缓存删除成功：${key}`);
+	logger.info('缓存删除成功', { url: key });
 };

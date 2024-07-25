@@ -3,7 +3,7 @@ import { getTime } from '@/utils/getTime';
 import { RouteType } from '@/types/router';
 import { RouteData } from '@/types';
 
-export const getRouteData = async (noCache: boolean) => {
+export const getRouteData = async (_: undefined, noCache: boolean) => {
 	const { fromCache, updateTime, data } = await getList(noCache);
 	const routeData: RouteData = {
 		name: 'zhihu',
@@ -24,7 +24,7 @@ export const getList = async (noCache: boolean) => {
 		url,
 		noCache,
 	});
-	const list = res.data;
+	const list = res.data.data;
 	return {
 		fromCache: res.fromCache,
 		updateTime: res.updateTime,

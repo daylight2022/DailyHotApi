@@ -6,10 +6,11 @@ import { RouteData } from '@/types';
 export const getRouteData = async (_: undefined, noCache: boolean) => {
 	const { fromCache, updateTime, data } = await getList(noCache);
 	const routeData: RouteData = {
-		name: 'toutiao',
-		title: '今日头条',
-		type: '热榜',
-		link: 'https://www.toutiao.com',
+		name: 'weibo',
+		title: '微博',
+		type: '热搜榜',
+		description: '实时热点，每分钟更新一次',
+		link: 'https://s.weibo.com/top/summary/',
 		total: data?.length || 0,
 		updateTime,
 		fromCache,
@@ -19,22 +20,24 @@ export const getRouteData = async (_: undefined, noCache: boolean) => {
 };
 
 export const getList = async (noCache: boolean) => {
-	const url = `https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc`;
+	const url = `https://weibo.com/ajax/side/hotSearch`;
 	const res = await get({
 		url,
 		noCache,
+		ttl: 60, // 每分钟更新一次
 	});
-	const list = res.data.data || [];
+	const list = res.data.data.realtime;
 	return {
 		fromCache: res.fromCache,
 		updateTime: res.updateTime,
-		data: list.map((t: RouteType['toutiao']) => ({
-			id: t.ClusterIdStr,
-			title: t.Title,
-			cover: t.Image.url,
-			hot: Number(t.HotValue),
-			timestamp: getTime(t.ClusterIdStr),
-			url: `https://www.toutiao.com/trending/${t.ClusterIdStr}/`,
-		})),
+		data: list.map((t: RouteType['weibo']) => {
+			const key = t.word_scheme ? t.word_scheme : `#${t.word}#`;
+			return {
+				title: t.word,
+				url: `https://s.weibo.com/weibo?q=${encodeURIComponent(key)}&t=31&band_rank=1&Refer=top`,
+				desc: t.note || key,
+				hot: t.num,
+			};
+		}),
 	};
 };
