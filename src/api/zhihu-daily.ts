@@ -28,7 +28,7 @@ export const getList = async (noCache: boolean) => {
 			Host: 'daily.zhihu.com',
 		},
 	});
-	const list = res.data.data.stories.filter((item: RouteType['zhihu-daily']) => item.type === 0);
+	const list = res.data.stories.filter((item: RouteType['zhihu-daily']) => item.type === 0);
 	return {
 		fromCache: res.fromCache,
 		updateTime: res.updateTime,

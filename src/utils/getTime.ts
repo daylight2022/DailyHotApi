@@ -1,5 +1,14 @@
 import dayjs from 'dayjs';
 
+interface CurrentDateTime {
+  year: string;
+  month: string;
+  day: string;
+  hour: string;
+  minute: string;
+  second: string;
+}
+
 export const getTime = (timeInput: string | number): number | null => {
 	try {
 		let num: number;
@@ -43,3 +52,20 @@ export const getTime = (timeInput: string | number): number | null => {
 		return null;
 	}
 };
+
+export const getCurrentDateTime = (padZero: boolean = false): CurrentDateTime => {
+  const now = dayjs();
+
+  // 补零
+  const pad = (num: number): string => (num < 10 ? `0${num}` : `${num}`);
+
+  return {
+    year: now.year().toString(),
+    month: padZero ? pad(now.month() + 1) : (now.month() + 1).toString(),
+    day: padZero ? pad(now.date()) : now.date().toString(),
+    hour: padZero ? pad(now.hour()) : now.hour().toString(),
+    minute: padZero ? pad(now.minute()) : now.minute().toString(),
+    second: padZero ? pad(now.second()) : now.second().toString(),
+  };
+};
+
